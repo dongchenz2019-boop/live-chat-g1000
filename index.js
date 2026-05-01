@@ -10,6 +10,13 @@ const dirname = path.dirname(filename);
 console.log('dirname:', dirname);
 
 app.use(express.static(path.join(dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
+
+app.post('/join', (req, res) => {
+    console.log(req.body.nickname);
+    res.send('Welcome');
+});
 
 app.listen(3000, () => {
     console.log('server started');

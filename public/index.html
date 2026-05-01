@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1>Welcome to live chat</h1>
         <div>
-            <input type="text">
-            <button>Join</button>
+            <form action="/join" method="post">
+                <input type="text" placeholder="Nickname" name="nickname">
+                <button type="submit">Join</button>
+            </form>
         </div>
     </div>
 </body>

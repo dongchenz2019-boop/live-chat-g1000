@@ -1,0 +1,13 @@
+.container {
+    width: 800px;
+    margin: 0 auto;
+    background-color: aqua;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.container button,input {
+    font-size: 1.3rem;
+    font-family: cursive;
+}
