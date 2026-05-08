@@ -11,11 +11,12 @@ console.log('dirname:', dirname);
 
 app.use(express.static(path.join(dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
-
+app.set('view engine', 'ejs');
+app.set('views', path.join(dirname, 'views'));
 
 app.post('/join', (req, res) => {
     console.log(req.body.nickname);
-    res.send('Welcome');
+    res.render('chat');
 });
 
 app.listen(3000, () => {
