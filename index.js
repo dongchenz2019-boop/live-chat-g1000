@@ -14,8 +14,18 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(dirname, 'views'));
 
+const chat = {
+    users: [],
+    history: []
+};
+
 app.post('/join', (req, res) => {
     console.log(req.body.nickname);
+    chat.history.push({
+        nickname: 'System',
+        message: `Welcome ${req.body.nickname}`,
+        datetime: new Date()
+    });
     res.render('chat');
 });
 
