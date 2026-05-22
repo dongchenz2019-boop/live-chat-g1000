@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { json } from 'express';
+import { findPackageJSON } from 'module';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -11,6 +12,7 @@ console.log('dirname:', dirname);
 
 app.use(express.static(path.join(dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', path.join(dirname, 'views'));
 
@@ -27,6 +29,10 @@ app.post('/join', (req, res) => {
         datetime: new Date()
     });
     res.render('chat');
+});
+
+app.get('/poll', (req, res) => {
+    res.status(200).json(chat);
 });
 
 app.listen(3000, () => {
