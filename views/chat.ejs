@@ -10,13 +10,14 @@
     <div class="chat-page">
         <div class="chat-history" id="chatHistory"></div>
         <div class="chat-form">
-            <form action="">
-                <input type="text">
+            <form action="" id="chatForm">
+                <input type="text" id="messageContent">
                 <button>Send</button>
             </form>
         </div>
     </div>
     <script>
+        const nickname = '<%= nickname %>'
         async function poll() {
             const response = await fetch('/poll');
             const data = await response.json();
@@ -27,8 +28,23 @@
             setTimeout(poll, 2000);
         }
 
+        function sendMessage(e) {
+            e.preventDefault();
+            const messageContent = document.getElementById('messageContent').value;
+            if (messageContent.trim() !== '') {
+                fetch('/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nickname, messageContent })
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             poll();
+            document.getElementById('chatForm').addEventListener('submit', sendMessage)
         });
     </script>
 </body>
