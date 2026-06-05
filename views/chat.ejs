@@ -21,16 +21,26 @@
         async function poll() {
             const response = await fetch('/poll');
             const data = await response.json();
+
+            const chatHistoryElem = document.getElementById('chatHistory');
+            const autoScroll = chatHistoryElem.scrollHeight - chatHistoryElem.scrollTop - chatHistoryElem.clientHeight < 5;
+
+
             document.getElementById('chatHistory').innerHTML = data.history
             .map(his => `<p>${his.nickname}: ${his.message}</p>`)
             .join('');
 
-            setTimeout(poll, 2000);
+            if (autoScroll) {
+                chatHistoryElem.scrollTop = chatHistoryElem.scrollHeight;
+            }
+
+            setTimeout(poll, 400);
         }
 
         function sendMessage(e) {
             e.preventDefault();
             const messageContent = document.getElementById('messageContent').value;
+            document.getElementById('messageContent').value = '';
             if (messageContent.trim() !== '') {
                 fetch('/send', {
                     method: 'POST',

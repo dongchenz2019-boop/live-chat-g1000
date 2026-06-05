@@ -41,7 +41,7 @@ app.post('/send', (req, res) => {
         message: req.body.messageContent,
         datetime: new Date()
     });
-    res.status(200);
+    res.status(200).send('OK');
 })
 
 app.listen(3000, () => {
