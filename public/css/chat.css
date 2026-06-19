@@ -6,8 +6,9 @@
 .chat-history {
     width: 100%;
     height: 85vh;
-    background-image: linear-gradient(lightyellow, yellow, orange, orangered, red, darkred);
+    background-color: turquoise;
     overflow-y: auto;
+    padding: 10px;
 }
 
 .chat-form {
@@ -28,4 +29,39 @@
 .chat-form button  {
     font-size: 2rem;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.system-msg {
+    color: green;
+}
+
+.system-msg span {
+    background-color: whitesmoke;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.self-msg {
+    color: blue;
+}
+
+.self-msg span {
+    background-color: whitesmoke;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.other-msg {
+    color: black;
+}
+
+.other-msg span {
+    background-color: whitesmoke;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.system-msg span, .self-msg span, .other-msg span {
+    padding: 5px;
+    border-radius: 10px;
 }

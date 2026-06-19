@@ -11,27 +11,32 @@
         <div class="chat-history" id="chatHistory"></div>
         <div class="chat-form">
             <form action="" id="chatForm">
-                <input type="text" id="messageContent">
+                <input type="text" id="messageContent" autocomplete="off" autofocus>
                 <button>Send</button>
             </form>
         </div>
     </div>
     <script>
         const nickname = '<%= nickname %>'
+        let lastMessageId = Number('<%= lastMessageId %>');
+
         async function poll() {
-            const response = await fetch('/poll');
+            const response = await fetch('/poll?lastMessageId=' + lastMessageId);
             const data = await response.json();
 
             const chatHistoryElem = document.getElementById('chatHistory');
             const autoScroll = chatHistoryElem.scrollHeight - chatHistoryElem.scrollTop - chatHistoryElem.clientHeight < 5;
 
+            if (data.history.length > 0) {
+                document.getElementById('chatHistory').innerHTML += data.history
+                .map(his => `<div style="margin-top: 30px;"><p class="${getMessageClass(his.nickname)}">${his.nickname}: </p><p class="${getMessageClass(his.nickname)}"><span>${his.message}</span></p>`)
+                .join('');
 
-            document.getElementById('chatHistory').innerHTML = data.history
-            .map(his => `<p>${his.nickname}: ${his.message}</p>`)
-            .join('');
-
-            if (autoScroll) {
+                if (autoScroll) {
                 chatHistoryElem.scrollTop = chatHistoryElem.scrollHeight;
+                }
+                //TODO change lastMessageId.
+                lastMessageId = data.history[data.history.length - 1].id;
             }
 
             setTimeout(poll, 400);
@@ -51,6 +56,18 @@
                 });
             }
         }
+
+
+        function getMessageClass(messageNickname) {
+            if (messageNickname === 'System') {
+                return 'system-msg';
+            }
+            if (messageNickname === nickname) {
+                return 'self-msg';
+            }
+            return 'other-msg';
+        }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             poll();
